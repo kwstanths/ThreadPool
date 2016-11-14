@@ -8,22 +8,22 @@ mns::ThreadPool * threadpool;
 
 void printhi(int id)
 {
-	std::cout << "Hello from:" << id << std::endl;
+	std::cout << "Hello from: " << id << std::endl;
 	return;
 }
 
 void invoke1(){
 	int j;
 
-	for (j= 0; j<10; j++){
-		threadpool->schedule([i]{ printhi(j); });
+	for (j= 0; j<100; j++){
+		threadpool->schedule([j]{ printhi(j); });
 	}
 }
 
 void invoke2(){
 	int i;
 
-	for (i = 0; i < 10; i++) {
+	for (i = 0; i < 100; i++) {
 		threadpool->schedule([i]{ printhi(i); });
 	}
 }
