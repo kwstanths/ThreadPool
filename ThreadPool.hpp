@@ -22,24 +22,23 @@ namespace mns{
 
 			void run(){
 				while(1){
-					std::function<void()> func;
+					Task * task;
 					{
 						std::unique_lock<std::mutex> l(threadpool->lock);
-						threadpool->condition.wait(l, [&](){return !threadpool->functions.empty() || !threadpool->run;});
+						threadpool->condition.wait(l, [&](){return !threadpool->tasks.empty() || !threadpool->run;});
 						if (!threadpool->run) return;
 
-						func = threadpool->functions.front();
-						threadpool->functions.pop();
+						task = threadpool->tasks.front();
+						threadpool->tasks.pop();
 					}
-					func();
+					(*task)();
 				}
 			}
 		};
 
 
-
 		std::vector<std::thread> threads;
-		std::queue<std::function<void()> > functions;
+		std::queue<Task *> tasks;
 
 		std::mutex lock;
 		std::condition_variable condition;
@@ -56,7 +55,7 @@ namespace mns{
 		void schedule(std::function<void()> _func){
 			 {
 			 	std::unique_lock<std::mutex> l(lock);
-			 	functions.push(_func);
+			 	tasks.push(new Task(_func));
 			 }
 			 condition.notify_one();
 		}
