@@ -9,19 +9,23 @@
 
 namespace mns{
 
+namespace ThreadPool{
+
 	class Task{
-      private:
-            std::function<void()> func;
+	private:
+		std::function<void()> func;
 		int time;
+		bool completed;
 
-      public:
-            Task(std::function<void()> _func);
+	public:
+		Task(std::function<void()> _func);
 
-            void operator()();
+		void operator()();
 
 		int gettime();
-      };
+	};
 
 }
 
+}
 #endif

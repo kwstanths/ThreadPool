@@ -13,6 +13,8 @@
 
 namespace mns{
 
+namespace ThreadPool {
+
 	class ThreadPool{
 
 		class Worker{
@@ -45,4 +47,5 @@ namespace mns{
 	};
 }
 
+}
 #endif

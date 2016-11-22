@@ -5,7 +5,7 @@
 
 #include "ThreadPool.hpp"
 
-mns::ThreadPool * threadpool;
+mns::ThreadPool::ThreadPool * threadpool;
 
 void printhi(int id)
 {
@@ -33,7 +33,7 @@ void invoke2(){
 int main(){
 
 
-	threadpool = new mns::ThreadPool(2);
+	threadpool = new mns::ThreadPool::ThreadPool(2);
 
 	std::thread t1 = std::thread(invoke1);
 	std::thread t2 = std::thread(invoke2);

@@ -2,6 +2,7 @@
 
 namespace mns{
 
+namespace ThreadPool{
 
       ThreadPool::Worker::Worker(ThreadPool * _threadpool): threadpool(_threadpool){
 
@@ -65,4 +66,6 @@ namespace mns{
 	int ThreadPool::gettime(){
 		return total_time;
 	}
+}
+
 }
