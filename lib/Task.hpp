@@ -18,11 +18,26 @@ namespace ThreadPool{
 		bool completed;
 
 	public:
-		Task(std::function<void()> _func);
+		Task(std::function<void()> _func){
+			time = 0;
+	            completed = false;
+			func = _func;
+		}
 
-		void operator()();
+		void operator()(){
+			struct timeval time_start, time_stop;
+			gettimeofday(&time_start, NULL);
 
-		int gettime();
+			func();
+
+			gettimeofday(&time_stop, NULL);
+			time = 1000 * (time_stop.tv_sec - time_start.tv_sec) + (time_stop.tv_usec - time_start.tv_usec) / 1000;
+			completed = true;
+		}
+
+		int gettime(){
+			return time;
+		}
 	};
 
 }

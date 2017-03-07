@@ -1,8 +1,9 @@
-#ifndef __THREADPOOL_HPP__
-#define __THREADPOOL_HPP__
+#ifndef __MYTHREADPOOL_HPP__
+#define __MYTHREADPOOL_HPP__
 
 #include <iostream>
 #include <vector>
+#include <functional>
 #include <queue>
 #include <thread>
 #include <condition_variable>
@@ -25,14 +26,14 @@ namespace ThreadPool {
 			void run();
 		};
 
-		std::vector<std::thread> threads;
+		std::vector<std::thread> workers;
 		std::queue<Task *> tasks;
 
 		std::mutex lock;
 		std::condition_variable condition;
+
 		std::atomic<bool> run;
 		std::atomic<bool> finish_when_done;
-
 		std::atomic<int> total_time;
 	public:
 		ThreadPool(int num_threads);

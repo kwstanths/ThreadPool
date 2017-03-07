@@ -1,4 +1,4 @@
-#include "ThreadPool.hpp"
+#include "myThreadPool.hpp"
 
 namespace mns{
 
@@ -33,7 +33,7 @@ namespace ThreadPool{
 		total_time = 0;
 
             for (int i = 0; i < num_threads; i++){
-			threads.push_back(std::thread(&Worker::run, new Worker(this)));
+			workers.push_back(std::thread(&Worker::run, new Worker(this)));
 		}
 	}
 
@@ -49,7 +49,7 @@ namespace ThreadPool{
             finish_when_done = true;
 
 		condition.notify_all();
-		for (std::vector<std::thread>::iterator itr = threads.begin(); itr != threads.end(); itr++) itr->join();
+		for (std::vector<std::thread>::iterator itr = workers.begin(); itr != workers.end(); itr++) itr->join();
 
 		return;
 	}
@@ -58,7 +58,7 @@ namespace ThreadPool{
             run = false;
 
 		condition.notify_all();
-		for (std::vector<std::thread>::iterator itr = threads.begin(); itr != threads.end(); itr++) itr->join();
+		for (std::vector<std::thread>::iterator itr = workers.begin(); itr != workers.end(); itr++) itr->join();
 
 		return;
 	}
