@@ -13,33 +13,22 @@ typedef struct process{
 		loop_times_ = loop_times;
 	}
 	void operator()(){
-		for(int i=0; i<loop_times_; i++);
+		for(int i=0; i<loop_times_; i++) sleep(1);
 		return;
 	}
 
 } process_t;
 
-void invoke1(){
+void invoke(){
 	int j;
 
-	for (j= 0; j<1000; j++){
-		process_t proc = process_t(1000000);
-		threadpool->schedule(proc);
-	}
-}
-
-void invoke2(){
-	int i;
-
-	for (i = 0; i < 1000; i++) {
-		process_t proc = process_t(1000000);
+	for (j= 0; j<1; j++){
+		process_t proc = process_t(10);
 		threadpool->schedule(proc);
 	}
 }
 
 int main(){
-
-
 	threadpool = new mns::ThreadPool::ThreadPool(2);
 
 	// std::thread t1 = std::thread(invoke1);
@@ -47,8 +36,12 @@ int main(){
 	//
 	// t1.join();
 	// t2.join();
-	invoke1();
-	invoke2();
+	invoke();
+	sleep(1);
+	std::cout << threadpool->available_threads() << std::endl;
+	invoke();
+	sleep(1);
+	std::cout << threadpool->available_threads() << std::endl;
 	threadpool->wait_finish();
 
 	std::cout << "Total time: " << threadpool->gettime() << std::endl;

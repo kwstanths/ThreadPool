@@ -32,13 +32,16 @@ namespace ThreadPool {
 		std::mutex lock;
 		std::condition_variable condition;
 
-		std::atomic<bool> run;
-		std::atomic<bool> finish_when_done;
-		std::atomic<int> total_time;
+		std::atomic<bool> run_;
+		std::atomic<bool> finish_when_done_;
+		std::atomic<int> total_time_;
+		std::atomic<int> available_threads_;
 	public:
 		ThreadPool(int num_threads);
 
 		void schedule(std::function<void()> _func);
+
+		int available_threads();
 
 		void wait_finish();
 

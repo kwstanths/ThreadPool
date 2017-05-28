@@ -2,14 +2,16 @@ cmake_minimum_required(VERSION 3.0)
 
 add_compile_options(-std=c++11)
 
-set(LIBNAME "myThreadPool")
-project(${LIBNAME})
+set(NAME "myThreadPool")
+project(${NAME})
+set(PROJECT_ROOT ${CMAKE_CURRENT_SOURCE_DIR})
+set(CMAKE_MODULE_PATH ${PROJECT_ROOT}/cmake/Modules/)
 
-file(GLOB ${LIBNAME}_HEADERS *.hpp)
-file(GLOB ${LIBNAME}_SOURCES *.cpp)
+file(GLOB ${NAME}_HEADERS *.hpp)
+file(GLOB ${NAME}_SOURCES *.cpp)
 
-add_library(${LIBNAME} ${${LIBNAME}_HEADERS} ${${LIBNAME}_SOURCES})
-set_target_properties(${LIBNAME} PROPERTIES LINKER_LANGUAGE CXX)
+add_library(${NAME} ${${NAME}_HEADERS} ${${NAME}_SOURCES})
+set_target_properties(${NAME} PROPERTIES LINKER_LANGUAGE CXX)
 
-install(TARGETS ${LIBNAME} DESTINATION ${LIBNAME}/lib)
-install(FILES ${${LIBNAME}_HEADERS} DESTINATION ${LIBNAME}/include)
+install(TARGETS ${NAME} DESTINATION ${NAME}/lib)
+install(FILES ${${NAME}_HEADERS} DESTINATION ${NAME}/include)
